@@ -17,15 +17,21 @@ clasp version
 clasp login
 ```
 
+You also need to create spreadsheet like [sample sheet](https://docs.google.com/spreadsheets/d/1lSQ_NTh4glafmBLqjYhmASdUDtkid6vmB0z9V0ThuNI/edit?usp=sharing)
+
+※If your spreadsheet's row and column is different from this sample, it would fail to add issues to github.
+
 ## Installing and Deployment
 A step by step series of examples that tell you how to get a running on your spreadsheet
 
+<br>
 
 ### Installing
 installing npm packages
 ```
 npm install
 ```
+<br>
 
 ### Deployment
 setting your Google App Script Id to .clasp.json
@@ -56,6 +62,7 @@ Finally, you can deploy to your spreadsheet and then you have to execute main fu
 ```
 npm run deploy
 ```
+<br>
 
 ### how to use without script properties
 if you would like to use this without script properties, you need to change these codes.<br>
@@ -73,6 +80,7 @@ const ACCESS_TOKEN = "YOUR GITHUB ACCESS TOKEN"
 const USER_NAME = "YOUR GITHUB ACCOUNT NAME"
 const REPOSITORY = "YOUR GITHUB REPOSITORY NAME";
 ```
+
 
 ## Customize
 If you would like to customize sheet, please change these codes.
