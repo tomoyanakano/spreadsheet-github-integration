@@ -1,38 +1,80 @@
-# GAS Clasp Scaffold
-Environment for Google App Script with Typescript, ESLint, Prettier and other npm packages
+# Github Spreadsheet Integration
+This project makes it possible to integrate github issues with google spreadsheet.
 
-## Usage
+Demo sheet is [here](https://docs.google.com/spreadsheets/d/1lSQ_NTh4glafmBLqjYhmASdUDtkid6vmB0z9V0ThuNI/edit?usp=sharing)
 
-### Clasp
+# Getting Started
+These instructions will get you a copy of the project up and running on your spreadsheet.
+<br>
 
-**.clasp.json**
-
-add your scriptId to .clasp.json
+## Prerequisites
+What things you need to install the software and how to install them
+<br>
 
 ```
-{"scriptId":" YOUR SCRIPT ID "}
+//installing clasp and login your google account
+clasp version
+clasp login
 ```
 
-**appscript.json**
+## Installing and Deployment
+A step by step series of examples that tell you how to get a running on your spreadsheet
 
-change appscript.json you want
 
-- Time Zone（default: "Asia/Tokyo"）
-- OAuth
-
-### npm 
-
-install packages
+### Installing
+installing npm packages
 ```
 npm install
 ```
 
-linter
+### Deployment
+setting your Google App Script Id to .clasp.json
 ```
-npm run lint
+{"scriptId":"<YOUR SCRIPT ID>"}
 ```
 
-deploy
+
+setting your Github info to Script Properties<br>
+
+import setProperties from setProperties.ts to index.ts, and execute with your github info in main function like below.
+```
+// setProperties.ts
+const main = () => {
+  setProperties(
+    "YOUR GITHUB ACCESS TOKEN",
+    "YOUR GITHUB ACCOUNT NAME",
+    "YOUR GITHUB REPOSITORY NAME"
+  )
+}
+
+```
+※ Setting Properties is required once, so you can delete these codes if you set value.
+
+<br>
+Finally, you can deploy to your spreadsheet and then you have to execute main function in order to set properties.
+
 ```
 npm run deploy
 ```
+
+### how to use without script properties
+if you would like to use this without script properties, you need to change these codes.<br>
+
+from 
+```
+// main.ts
+const ACCESS_TOKEN = PROPERTIES.getProperty("accessToken");
+const USER_NAME = PROPERTIES.getProperty("username");
+const REPOSITORY = PROPERTIES.getProperty("repository");
+```
+to
+```
+const ACCESS_TOKEN = "YOUR GITHUB ACCESS TOKEN"
+const USER_NAME = "YOUR GITHUB ACCOUNT NAME"
+const REPOSITORY = "YOUR GITHUB REPOSITORY NAME";
+```
+
+
+## Customize
+you can customize this code and spreadsheet
+if you would
