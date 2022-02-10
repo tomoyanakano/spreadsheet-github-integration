@@ -74,7 +74,22 @@ const USER_NAME = "YOUR GITHUB ACCOUNT NAME"
 const REPOSITORY = "YOUR GITHUB REPOSITORY NAME";
 ```
 
-
 ## Customize
-you can customize this code and spreadsheet
-if you would
+If you would like to customize sheet, please change these codes.
+
+```
+// main.ts
+// spreadSheet
+const SHEET = SpreadsheetApp.getActive().getSheetByName("issues");
+const LABEL_ROW = 5;
+const CHECK_COL = 1;
+const STATE_COL = 2;
+const TITLE_COL = 3;
+const LABEL_COL = 4;
+const BODY_COL = 5;
+const ASSIGNEE_COL = 6;
+const URL_COL = 7;
+```
+
+# Contribution
+please feel free to add issue and create pull request!!
