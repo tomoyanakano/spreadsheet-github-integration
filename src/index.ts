@@ -9,6 +9,7 @@ const URL = `https://api.github.com/repos/${USER_NAME}/${REPOSITORY}/issues`;
 // spreadSHEET
 const SHEET = SpreadsheetApp.getActive().getSheetByName("issues");
 const LABEL_ROW = 5;
+const CHECK_COL = 1;
 const STATE_COL = 2;
 const TITLE_COL = 3;
 const LABEL_COL = 4;
@@ -68,6 +69,7 @@ const setValue = (response: GoogleAppsScript.URL_Fetch.HTTPResponse) => {
   const row_num = titles.indexOf(json.title) + LABEL_ROW + 1;
   SHEET.getRange(row_num, STATE_COL).setValue(state);
   SHEET.getRange(row_num, URL_COL).setValue(url);
+  SHEET.getRange(row_num, CHECK_COL).setValue(false);
 };
 
 const main = () => {
