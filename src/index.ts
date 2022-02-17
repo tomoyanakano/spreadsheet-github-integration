@@ -1,7 +1,7 @@
+import { getIssues, postIssues } from "./api/githubAPI";
 import setProperties from "./setProperties";
 import { Issue } from "./types/issue";
 import {
-  ACCESS_TOKEN,
   ASSIGNEE_COL,
   BODY_COL,
   CHECK_COL,
@@ -12,7 +12,6 @@ import {
   SHEET,
   STATE_COL,
   TITLE_COL,
-  URL,
   URL_COL,
 } from "./utils";
 
@@ -48,23 +47,9 @@ const setValue = (rowNum: number, json: any) => {
   SHEET.getRange(rowNum, CHECK_COL, 1, LAST_COLUMN).setValues([data]);
 };
 
-// create requst
-const createRequest = () => {
-  return (payload: string): GoogleAppsScript.URL_Fetch.URLFetchRequest => ({
-    url: URL,
-    method: "post",
-    headers: {
-      accept: "application/vnd.github.v3+json",
-      Authorization: `token ${ACCESS_TOKEN}`,
-    },
-    payload: payload,
-  });
-};
-
 // create issues
-const createIssues = () => {
+const addIssues = () => {
   try {
-    const request = createRequest();
     // fetch all SHEET data
     const data = SHEET.getRange(LABEL_ROW + 1, 1, LAST_ROW - 1, 7).getValues();
     const titles = SHEET.getRange(LABEL_ROW + 1, TITLE_COL, LAST_ROW + 1)
@@ -73,10 +58,9 @@ const createIssues = () => {
     const issues: Issue[] = data
       .map(getValue)
       .filter((issue: Issue | undefined): issue is Issue => !!issue);
-    const requests = issues.map((issue) => request(JSON.stringify(issue)));
-    const responses = UrlFetchApp.fetchAll(requests);
+    const responses = postIssues(issues);
     responses.map((response) => {
-      const json = JSON.parse(response.getContentText());
+      const json = JSON.parse(response);
       const rowNum = titles.indexOf(json.title) + LABEL_ROW + 1;
       setValue(rowNum, json);
     });
@@ -84,18 +68,6 @@ const createIssues = () => {
   } catch (error: any) {
     console.log(error);
   }
-};
-
-const fetchIssues = (): string => {
-  const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
-    method: "get",
-    headers: {
-      accept: "application/vnd.github.v3+json",
-      Authorization: `token ${ACCESS_TOKEN}`,
-    },
-  };
-  const response = UrlFetchApp.fetch(URL, options);
-  return response.getContentText();
 };
 
 // sync issues
@@ -114,7 +86,7 @@ const syncIssues = () => {
       .map((row) => row[TITLE_COL - 1])
       .filter((title) => title != "");
     // fetch issues
-    const json = JSON.parse(fetchIssues());
+    const json = JSON.parse(getIssues());
     // row number count(for adding issues)
     let count = 0;
     json.map((issue: any) => {
