@@ -35,7 +35,6 @@ const getValue = (row: string[]): Issue | undefined => {
 // set value to SpreadSheet
 const setValue = (rowNum: number, json: any) => {
   const data = [];
-  console.log(json);
   data[STATE_COL - 1] = json.state;
   data[TITLE_COL - 1] = json.title;
   data[BODY_COL - 1] = json.body;
