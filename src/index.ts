@@ -19,7 +19,7 @@ import {
 const getValue = (row: string[]): Issue | undefined => {
   const check = row[0];
   const title = row[TITLE_COL - 1];
-  const labels = row[LABEL_COL - 1].split(",");
+  const labels = row[LABEL_COL - 1] == "" ? [] : row[LABEL_COL - 1].split(",");
   const body = row[BODY_COL - 1];
   const assignee = row[ASSIGNEE_COL - 1];
   if (check) {
