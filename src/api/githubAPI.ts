@@ -29,6 +29,6 @@ export const getIssues = (): string => {
       Authorization: `token ${ACCESS_TOKEN}`,
     },
   };
-  const response = UrlFetchApp.fetch(URL, options);
+  const response = UrlFetchApp.fetch(`${URL}?state=all`, options);
   return response.getContentText();
 };
